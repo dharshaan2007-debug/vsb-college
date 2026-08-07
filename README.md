@@ -1,5 +1,7 @@
 # VSB Engineering College - AI Chatbot (MVP)
 
+🌐 **Live Demo:** [https://vsb-college.onrender.com](https://vsb-college.onrender.com)
+
 A working starter version of the AI chatbot described in the project brief:
 React (Vite) frontend + Node/Express backend + Google Gemini 2.5 Flash API,
 answering only from a college knowledge base file so it never invents facts.
