@@ -9,7 +9,7 @@ const dotenv = require("dotenv");
 const fs = require("fs");
 const path = require("path");
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, ".env") });
 
 const app = express();
 app.use(cors());
@@ -92,9 +92,12 @@ app.post("/api/chat", async (req, res) => {
       return res.status(502).json({ error: "AI service error", details: data });
     }
 
+    const replyParts = data?.candidates?.[0]?.content?.parts || [];
     const reply =
-      data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("") ||
-      "Sorry, I couldn't generate a response. Please try again.";
+      replyParts
+        .filter((p) => typeof p.text === "string" && p.text.trim().length > 0)
+        .map((p) => p.text)
+        .join("\n") || "Sorry, I couldn't generate a response. Please try again.";
 
     res.json({ reply });
   } catch (err) {
@@ -102,6 +105,16 @@ app.post("/api/chat", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+// Serve frontend static assets in production if available
+const frontendDistPath = path.join(__dirname, "../frontend/dist");
+if (fs.existsSync(frontendDistPath)) {
+  app.use(express.static(frontendDistPath));
+  app.get("*", (req, res, next) => {
+    if (req.path.startsWith("/api/")) return next();
+    res.sendFile(path.join(frontendDistPath, "index.html"));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`VSB Chatbot backend running on http://localhost:${PORT}`);

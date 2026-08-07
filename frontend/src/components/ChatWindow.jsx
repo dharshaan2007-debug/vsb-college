@@ -3,7 +3,12 @@ import axios from "axios";
 import { Send, Loader2 } from "lucide-react";
 import ChatBubble from "./ChatBubble.jsx";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL !== undefined && import.meta.env.VITE_API_BASE_URL !== ""
+    ? import.meta.env.VITE_API_BASE_URL
+    : import.meta.env.PROD
+    ? ""
+    : "http://localhost:5000";
 
 const ChatWindow = forwardRef(function ChatWindow(_, ref) {
   const [messages, setMessages] = useState([
