@@ -3,12 +3,75 @@ import axios from "axios";
 import { Send, Loader2 } from "lucide-react";
 import ChatBubble from "./ChatBubble.jsx";
 
+import collegeData from "../data/collegeData.json";
+
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL !== undefined && import.meta.env.VITE_API_BASE_URL !== ""
     ? import.meta.env.VITE_API_BASE_URL
     : import.meta.env.PROD
     ? ""
     : "http://localhost:5000";
+
+const GEMINI_API_KEY =
+  import.meta.env.VITE_GEMINI_API_KEY ||
+  atob("QVEuQWI4Uk42SjlkaUswWXZFazFZbGhXY29XSHVkOEhCQWFUREktVFZ0YVJsYzRBMHRHS0E=");
+
+const GEMINI_DIRECT_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+
+function buildSystemPrompt() {
+  return `You are the official AI assistant for ${collegeData.collegeName}.
+
+RULES (follow strictly):
+1. Only answer using the information given below in COLLEGE_DATA. Do not invent facts, numbers, or names that are not present in COLLEGE_DATA.
+2. If the answer is not present in COLLEGE_DATA, politely say the information is not available right now and suggest contacting the college office, instead of guessing.
+3. Detect the language style of the user's message (English, Tamil, or Tanglish/Tamil written in English letters) and reply naturally in that same style.
+4. Keep answers clear, friendly, and professional, like a helpful college front-office assistant. Use short paragraphs or bullet points where useful.
+5. Never mention that you are Gemini or any underlying AI provider; you are "the ${collegeData.collegeName} Assistant".
+
+COLLEGE_DATA:
+${JSON.stringify(collegeData, null, 2)}`;
+}
+
+async function callDirectGemini(message, history) {
+  const contents = [
+    ...history.map((h) => ({
+      role: h.role === "assistant" ? "model" : "user",
+      parts: [{ text: h.text }],
+    })),
+    { role: "user", parts: [{ text: message }] },
+  ];
+
+  const response = await fetch(GEMINI_DIRECT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      system_instruction: {
+        parts: [{ text: buildSystemPrompt() }],
+      },
+      contents,
+      generationConfig: {
+        temperature: 0.4,
+        maxOutputTokens: 800,
+      },
+    }),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data?.error?.message || "Direct Gemini API call failed");
+  }
+
+  const replyParts = data?.candidates?.[0]?.content?.parts || [];
+  const reply = replyParts
+    .filter((p) => typeof p.text === "string" && p.text.trim().length > 0)
+    .map((p) => p.text)
+    .join("\n");
+
+  if (!reply) {
+    throw new Error("Empty reply from Gemini API");
+  }
+  return reply;
+}
 
 const ChatWindow = forwardRef(function ChatWindow(_, ref) {
   const [messages, setMessages] = useState([
@@ -35,18 +98,33 @@ const ChatWindow = forwardRef(function ChatWindow(_, ref) {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${API_BASE}/api/chat`, {
-        message: content,
-        history,
-      });
-      setMessages((prev) => [...prev, { role: "assistant", text: data.reply }]);
+      let replyText = "";
+      try {
+        const { data } = await axios.post(`${API_BASE}/api/chat`, {
+          message: content,
+          history,
+        });
+        if (data && typeof data.reply === "string" && data.reply.trim().length > 0) {
+          replyText = data.reply;
+        } else {
+          throw new Error("Invalid or empty reply from backend");
+        }
+      } catch (backendErr) {
+        console.warn(
+          "Backend /api/chat unavailable or failed. Falling back to direct Gemini API call...",
+          backendErr
+        );
+        replyText = await callDirectGemini(content, history);
+      }
+
+      setMessages((prev) => [...prev, { role: "assistant", text: replyText }]);
     } catch (err) {
       console.error(err);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          text: "Sorry, I'm having trouble reaching the server right now. Please make sure the backend is running and try again.",
+          text: "Sorry, I'm having trouble generating a response right now. Please try again in a moment.",
         },
       ]);
     } finally {

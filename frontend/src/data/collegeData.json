@@ -1,0 +1,95 @@
+{
+  "collegeName": "VSB Engineering College",
+  "about": "VSB Engineering College is an autonomous engineering institution offering UG and PG programs across multiple departments, with a focus on academics, placements, and campus development.",
+  "admissions": {
+    "process": "Admissions are offered through Government Counseling (TNEA) for Government Quota seats and through direct Management Quota admission for the remaining seats.",
+    "eligibility": "Pass in Higher Secondary (10+2) with Physics, Chemistry and Mathematics as core subjects, meeting the minimum marks required by the affiliating university/AICTE norms.",
+    "documents": [
+      "10th and 12th mark sheets",
+      "Transfer Certificate",
+      "Community Certificate (if applicable)",
+      "TNEA application/allotment order (for counseling admissions)",
+      "Passport size photographs",
+      "Aadhar card"
+    ],
+    "timeline": "Management quota counseling typically starts after Class 12 results; TNEA counseling follows the Anna University schedule announced each year."
+  },
+  "departments": [
+    {
+      "name": "Computer Science and Engineering (CSE)",
+      "overview": "Focuses on software development, algorithms, AI/ML, and systems.",
+      "vision": "To produce globally competent computer science professionals.",
+      "career": ["Software Engineer", "Data Scientist", "AI/ML Engineer", "Higher Studies (M.S./M.Tech)"]
+    },
+    {
+      "name": "Computer Science and Engineering (Cyber Security) (CCE)",
+      "overview": "Specializes in network security, ethical hacking, and secure systems design.",
+      "vision": "To create skilled cybersecurity professionals for evolving digital threats.",
+      "career": ["Security Analyst", "Penetration Tester", "SOC Engineer"]
+    },
+    {
+      "name": "Electronics and Communication Engineering (ECE)",
+      "overview": "Covers communication systems, embedded systems, VLSI, and signal processing.",
+      "career": ["Embedded Engineer", "VLSI Design Engineer", "Telecom Engineer"]
+    },
+    {
+      "name": "Mechanical Engineering (MECH)",
+      "overview": "Covers thermal, design, manufacturing, and automation engineering.",
+      "career": ["Design Engineer", "Production Engineer", "Automotive Engineer"]
+    },
+    {
+      "name": "Electrical and Electronics Engineering (EEE)",
+      "overview": "Covers power systems, control systems, and electrical machines.",
+      "career": ["Power Engineer", "Control Systems Engineer"]
+    },
+    {
+      "name": "Civil Engineering (CIVIL)",
+      "overview": "Covers structural, geotechnical, and construction engineering.",
+      "career": ["Site Engineer", "Structural Engineer", "Project Manager"]
+    }
+  ],
+  "courses": {
+    "ug": ["B.E. CSE", "B.E. CSE (Cyber Security)", "B.E. ECE", "B.E. EEE", "B.E. MECH", "B.E. CIVIL"],
+    "pg": ["M.E. CSE", "M.E. Structural Engineering", "MBA"],
+    "duration": "UG: 4 years (8 semesters). PG: 2 years (4 semesters).",
+    "intake": "Varies by department, typically 60-120 seats per UG program."
+  },
+  "fees": {
+    "tuitionFeeNote": "Tuition fees vary by department and quota. Replace with your official fee structure PDF figures.",
+    "governmentQuota": "As per Tamil Nadu Government/Anna University fixed fee norms.",
+    "managementQuota": "As per college-fixed management quota fee structure.",
+    "hostelFee": "Contact the hostel office for the current annual hostel fee.",
+    "busFee": "Bus fee depends on the route/distance slab; contact transport office for the route-wise fee chart."
+  },
+  "placements": {
+    "highestPackage": "Update with latest verified figure (e.g. 12 LPA)",
+    "averagePackage": "Update with latest verified figure (e.g. 3.5 LPA)",
+    "placementPercentage": "Update with latest verified figure (e.g. 85%)",
+    "recruiters": ["TCS", "Infosys", "Wipro", "Cognizant", "Zoho", "HCL"],
+    "training": "Includes aptitude training, technical training, mock interviews, and soft-skills sessions coordinated by the placement cell."
+  },
+  "scholarships": {
+    "eligibility": "Based on academic merit, family income criteria, and government scholarship scheme norms.",
+    "tuitionWaiver": "Available for eligible first-graduate/merit students as per management policy.",
+    "governmentSchemes": ["First Graduate Scholarship", "SC/ST Government Scholarship", "Post Matric Scholarship"]
+  },
+  "facilities": {
+    "library": "Central library with technical journals, e-books, and a digital library section.",
+    "hostel": "Separate hostel blocks for boys and girls with mess facilities.",
+    "transport": "College buses covering major routes around the campus.",
+    "sports": "Indoor and outdoor sports facilities including a playground and gym.",
+    "labs": "Department-specific labs plus a central computing/research lab.",
+    "wifi": "Campus-wide Wi-Fi connectivity.",
+    "medical": "On-campus first-aid/medical room with tie-up hospitals for emergencies."
+  },
+  "contact": {
+    "address": "VSB Engineering College, [Update full address here], Tamil Nadu, India",
+    "phone": "[Update phone number]",
+    "email": "[Update official email]",
+    "mapsLink": "[Update Google Maps link]"
+  },
+  "faqs": [
+    {"q": "What courses are available?", "a": "We offer UG programs in CSE, CSE (Cyber Security), ECE, EEE, MECH, and CIVIL, along with PG programs including M.E. CSE, M.E. Structural Engineering, and MBA."},
+    {"q": "How is the placement record?", "a": "Our placement cell conducts regular training and drives with recruiters such as TCS, Infosys, Wipro, Cognizant, Zoho, and HCL. See the Placements page for the latest figures."}
+  ]
+}
